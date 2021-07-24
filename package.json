@@ -1,0 +1,17 @@
+{
+  "name": "bilibili_emojis",
+  "version": "1.0.0",
+  "main": "main.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
