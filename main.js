@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const {createFolder} = require('./util');
 const cacheJson = require('./cache.json') // 数据缓存
+const dayjs = require('dayjs');
 
 // 创建产出文件夹
 var fliename = path.join(__dirname, './output');
@@ -31,18 +32,28 @@ const saveImg = async (url, fileName, item) => {
 // 获取数据缓存
 const updteCache = async ()=> {
     const cacheApi = 'http://api.bilibili.com/x/emote/user/panel/web?business=dynamic';
-    const cachaFileName = './cache.json'
+    const cacheFileName = './cache.json' // 最新版本缓存
+    const cacheFileNameDay = `./cache/${dayjs().format('YYYY-MM-DD')}.json`;
     try {
         let response = await axios.get(cacheApi)
         const {data, code} = response.data;
         if(code === 0) {
             const str = JSON.stringify(data)
-            fs.writeFile(cachaFileName, str, err => {
+            fs.writeFile(cacheFileName, str, err => {
                 if (err) {
                     formatJson(cacheJson);
                     throw err;
                 } else {
-                    console.log(`数据缓存获取成功, 已保存至: ${cachaFileName}`);
+                    console.log(`数据缓存获取成功, 已保存至: ${cacheFileName}`);
+                    formatJson(data);
+                }
+             });
+             fs.writeFile(cacheFileNameDay, str, err => {
+                if (err) {
+                    formatJson(cacheJson);
+                    throw err;
+                } else {
+                    console.log(`数据缓存获取成功, 已保存至: ${cacheFileNameDay}`);
                     formatJson(data);
                 }
              });
